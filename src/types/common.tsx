@@ -9,7 +9,7 @@ export type TodoItemType = {
 }
 
 export type TodoListType = {
-  [section: string]: TodoItem[]
+  [section: string]: TodoItemType[]
 }
 
 export type ThemeProviderProps = {
