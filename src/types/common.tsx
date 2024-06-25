@@ -12,6 +12,14 @@ export type TodoListType = {
   [section: string]: TodoItemType[]
 }
 
+export type SetTodosType = React.Dispatch<React.SetStateAction<TodoListType | null>>;
+
+export type TodoListProps = {
+  todos: TodoListType | null;
+  setTodos: SetTodosType;
+};
+
+
 export type ThemeProviderProps = {
   children: ReactNode
 }
@@ -20,8 +28,3 @@ export type ThemeContextType = {
   theme: "light" | "dark";
   toggleTheme: () => void;
 }
-
-export type TodoListProps = {
-  todos: TodoListType | null;
-  setTodos: React.Dispatch<React.SetStateAction<TodoListType | null>>;
-};
