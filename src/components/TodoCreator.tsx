@@ -105,7 +105,7 @@ export default function TodoCreator({ todos, setTodos, sectionName }: todoCreato
       <input
         ref={inputRef}
         name="newTodo"
-        maxLength={90}
+        maxLength={100}
         value={newTodo.text}
         type="text"
         placeholder="Type here to create a new to-do and then hit ENTER"
