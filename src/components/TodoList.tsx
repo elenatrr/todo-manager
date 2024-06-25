@@ -1,5 +1,6 @@
 import { TodoItemType, TodoListType } from "../types/common";
 import { TodoListProps } from "../types/common";
+import TodoCreator from "./TodoCreator";
 
 export default function TodoList({todos, setTodos}: TodoListProps) {
 
@@ -39,6 +40,7 @@ export default function TodoList({todos, setTodos}: TodoListProps) {
               </li>
             })}
           </ul>
+          <TodoCreator todos={todos} setTodos={setTodos} sectionName={section}/>
         </section>
       })}
     </div>

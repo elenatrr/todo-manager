@@ -2,16 +2,16 @@
 
 Todo Manager is a simple and efficient todo list application built with Vite, React, and TypeScript. It helps you manage your daily tasks effectively and improve your productivity.
 
+## Demo
+
+You can see a live demo of the application [here](https://todo-manager-gilt.vercel.app/).
+
 ## Features
 
 - Add, edit, and delete tasks
 - Mark tasks as completed
 - Filter tasks by status (all, active, completed)
 - Responsive design for mobile and desktop
-
-## Demo
-
-You can see a live demo of the application [here](#).
 
 ## Installation
 
