@@ -28,10 +28,11 @@ export default function Home() {
     <>
       <div className="flex gap-2 flex-col justify-between md:flex-row md:items-end mb-6">
         <h1 className="title">My Tasks</h1>
-        <ul className="flex gap-6">
+        <ul className="flex gap-4 md:gap-6">
           <li className="dot before:bg-high">high</li>
           <li className="dot before:bg-medium">medium</li>
           <li className="dot before:bg-low">low</li>
+          <li className="dot before:bg-accent">none</li>
         </ul>
       </div>
       <TodoList todos={todos} setTodos={setTodos} />

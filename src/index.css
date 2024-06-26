@@ -44,6 +44,10 @@
   @apply border-low checked:bg-low;
 }
 
+.none {
+  @apply border-accent checked:bg-accent;
+}
+
 .checkbox {
   @apply relative;
 }

@@ -41,7 +41,7 @@ export default function TodoItem({ task, section, onComplete, onEdit, onPriority
       </button>
       <button
         aria-label="Delete Todo"
-        className="text-accent hover:text-error "
+        className="text-accent hover:text-error"
         onClick={() => onDelete(section, task)}
       >
         <svg

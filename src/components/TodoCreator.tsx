@@ -7,9 +7,8 @@ export default function TodoCreator({ todos, setTodos, sectionName }: TodoCreato
   const [newTodo, setNewTodo] = useState<TodoItemType>({
     id: new Date().getTime(),
     text: "",
-    status: "not started",
     completed: false,
-    priority: "low",
+    priority: "none",
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -37,18 +36,16 @@ export default function TodoCreator({ todos, setTodos, sectionName }: TodoCreato
       setNewTodo({
         id: new Date().getTime(),
         text: "",
-        status: "not started",
         completed: false,
-        priority: "low",
+        priority: "none",
       });
     } else {
       setIsError(true);
       setNewTodo({
         id: new Date().getTime(),
         text: "",
-        status: "not started",
         completed: false,
-        priority: "low",
+        priority: "none",
       });
       setTimeout(() => {
         setIsError(false);
