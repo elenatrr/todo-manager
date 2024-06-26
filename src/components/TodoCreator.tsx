@@ -104,7 +104,7 @@ export default function TodoCreator({ todos, setTodos, sectionName }: TodoCreato
         type="text"
         placeholder="Type here to create a new to-do and then hit ENTER"
         autoComplete="off"
-        className="bg-inherit w-full focus:outline-none"
+        className="bg-inherit w-full focus:outline-none text-ellipsis"
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}
         onChange={handleInputChange}
