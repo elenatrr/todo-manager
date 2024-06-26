@@ -1,13 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { SetTodosType, TodoListType, TodoItemType } from "../types/common";
+import { TodoCreatorProps, TodoItemType } from "../types/common";
 
-type todoCreatorProps = {
-  todos: TodoListType;
-  setTodos: SetTodosType;
-  sectionName: string
-}
-
-export default function TodoCreator({ todos, setTodos, sectionName }: todoCreatorProps) {
+export default function TodoCreator({ todos, setTodos, sectionName }: TodoCreatorProps) {
   const [isFieldActive, setIsFieldActive] = useState(false);
   const [isError, setIsError] = useState(false);
   const [newTodo, setNewTodo] = useState<TodoItemType>({
@@ -15,7 +9,7 @@ export default function TodoCreator({ todos, setTodos, sectionName }: todoCreato
     text: "",
     status: "not started",
     completed: false,
-    priority: "medium",
+    priority: "low",
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -45,7 +39,7 @@ export default function TodoCreator({ todos, setTodos, sectionName }: todoCreato
         text: "",
         status: "not started",
         completed: false,
-        priority: "medium",
+        priority: "low",
       });
     } else {
       setIsError(true);
@@ -54,7 +48,7 @@ export default function TodoCreator({ todos, setTodos, sectionName }: todoCreato
         text: "",
         status: "not started",
         completed: false,
-        priority: "medium",
+        priority: "low",
       });
       setTimeout(() => {
         setIsError(false);
@@ -97,7 +91,7 @@ export default function TodoCreator({ todos, setTodos, sectionName }: todoCreato
 
   return (
     <div className={`${isError && "animate-shake"} ${isFieldActive && "bg-background"} hover:bg-background p-0.5 transition-colors flex gap-2 items-center text-text rounded flex-1`}>
-      <button aria-label="Clear Input" ref={clearButtonRef} onClick={clearInput} className={`${newTodo.text ? "rotate-45 text-error" : "pointer-events-none opacity-50"} transition-transform`}>
+      <button aria-label="Clear Input" ref={clearButtonRef} onClick={clearInput} className={`${newTodo.text ? "rotate-45 text-error" : "pointer-events-none text-accent"} transition-transform`}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
