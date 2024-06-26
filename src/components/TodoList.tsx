@@ -1,6 +1,7 @@
-import { TodoItemType, TodoListType } from "../types/common";
+import { PriorityType, TodoItemType, TodoListType } from "../types/common";
 import { TodoListProps } from "../types/common";
 import TodoCreator from "./TodoCreator";
+import TodoItem from "./TodoItem";
 
 export default function TodoList({ todos, setTodos }: TodoListProps) {
 
@@ -28,12 +29,6 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
     }))
   }
 
-  const editTodo = (event: React.ChangeEvent<HTMLInputElement>, section: string, task: TodoItemType) => {
-    updateTasks(section, task.id, (todo: TodoItemType) => ({
-      ...todo, text: event.target.value
-    }))
-  }
-
   const deleteTodo = (section: string, task: TodoItemType) => {
     setTodos((currentTodos) => {
       if (!currentTodos) {
@@ -45,6 +40,24 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
 
       return { ...currentTodos, [section]: updatedTasks }
     })
+  }
+
+  const editTodo = (event: React.ChangeEvent<HTMLInputElement>, section: string, task: TodoItemType) => {
+    updateTasks(section, task.id, (todo: TodoItemType) => ({
+      ...todo, text: event.target.value
+    }))
+  }
+
+  const handleTextInputBlur = (section: string, task: TodoItemType) => {
+    if (!task.text.trim()) {
+      deleteTodo(section, task)
+    }
+  }
+
+  const handlePriorityChange = (section: string, task: TodoItemType, newPriority: PriorityType) => {
+    updateTasks(section, task.id, (todo: TodoItemType) => ({
+      ...todo, priority: newPriority,
+    }))
   }
 
   return (
@@ -72,48 +85,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
             <h2 className="capitalize text-lg mb-4">{section}</h2>
           </div>
           <ul>
-            {tasks.map((task) => (
-              <li
-                key={task.id}
-                className="flex gap-2 items-center mb-3 justify-between hover:bg-background px-1"
-              >
-                <input
-                  name="todoCheckbox"
-                  type="checkbox"
-                  onChange={() => handleComplete(section, task)}
-                  checked={task.completed}
-                  className={`${task.priority} appearance-none flex-shrink-0 cursor-pointer h-5 w-5 border-2 rounded-md focus:outline-none hover:opacity-70 transition-opacity checkbox`}
-                />
-                <input
-                  name="todoText"
-                  type="text"
-                  value={task.text}
-                  maxLength={100}
-                  onChange={(event) => editTodo(event, section, task)}
-                  className="flex-1 bg-inherit outline-none"
-                />
-                <button
-                  aria-label="Delete Todo"
-                  className="opacity-50 hover:text-error hover:opacity-100"
-                  onClick={() => deleteTodo(section, task)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
-                </button>
-              </li>
-            ))}
+            {tasks.map((task) => ( <TodoItem  key={task.id} task={task} section={section} onComplete={handleComplete} onEdit={editTodo} onPriorityChange={handlePriorityChange} onTextInputBlur={handleTextInputBlur} onDelete={deleteTodo}/>))}
           </ul>
           <TodoCreator todos={todos} setTodos={setTodos} sectionName={section} />
         </section>
