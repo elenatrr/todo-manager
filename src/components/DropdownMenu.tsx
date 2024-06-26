@@ -20,7 +20,7 @@ export default function DropdownMenu({ menuBtnRef, sectionName, task, onPriority
 
   return (
     <div ref={dropDownRef} className="absolute right-0 bottom-6 p-2 bg-primary border-2 border-accent border-opacity-50 rounded-xl">
-      <p className="text-accent mb-2">Priority</p>
+      <p className="text-accent mb-2">Priority:</p>
       {priorities.map((newPriority) => {
         return <button key={newPriority} aria-label={`${newPriority} Priority"`} onClick={() => onPriorityChange(sectionName, task, newPriority)} className={`${newPriority === "high" ? "text-high" : newPriority === "medium" ? "text-medium" : "text-low"} p-0.5 hover:bg-slate-200 hover:bg-opacity-50 rounded`}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">

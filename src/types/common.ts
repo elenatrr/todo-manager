@@ -35,7 +35,7 @@ export type TodoItemProps = {
   task: TodoItemType,
   section: string,
   onComplete: (section: string, task: TodoItemType) => void,
-  onEdit: (event: React.ChangeEvent<HTMLInputElement>, section: string, task: TodoItemType) => void,
+  onEdit: (event: React.ChangeEvent<HTMLTextAreaElement>, section: string, task: TodoItemType) => void,
   onPriorityChange: (section: string, task: TodoItemType, newPriority: "high" | "medium" | "low") => void,
   onTextInputBlur: (section: string, task: TodoItemType) => void,
   onDelete: (section: string, task: TodoItemType) => void
