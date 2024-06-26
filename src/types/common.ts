@@ -1,11 +1,10 @@
 import { ReactNode } from "react";
 
-export type PriorityType = "high" | "medium" | "low"
+export type PriorityType = "high" | "medium" | "low" | "none";
 
 export type TodoItemType = {
   id: number;
   text: string;
-  status: "not started" | "in progress" | "done";
   completed: boolean;
   priority: PriorityType;
 }
@@ -35,8 +34,8 @@ export type TodoItemProps = {
   task: TodoItemType,
   section: string,
   onComplete: (section: string, task: TodoItemType) => void,
-  onEdit: (event: React.ChangeEvent<HTMLInputElement>, section: string, task: TodoItemType) => void,
-  onPriorityChange: (section: string, task: TodoItemType, newPriority: "high" | "medium" | "low") => void,
+  onEdit: (event: React.ChangeEvent<HTMLTextAreaElement>, section: string, task: TodoItemType) => void,
+  onPriorityChange: (section: string, task: TodoItemType, newPriority: PriorityType) => void,
   onTextInputBlur: (section: string, task: TodoItemType) => void,
   onDelete: (section: string, task: TodoItemType) => void
 }
@@ -51,6 +50,6 @@ export type DropdownMenuProps = {
   menuBtnRef:  React.RefObject<HTMLButtonElement>,
   sectionName: string,
   task: TodoItemType,
-  onPriorityChange: (section: string, task: TodoItemType, newPriority: "high" | "medium" | "low") => void,
+  onPriorityChange: (section: string, task: TodoItemType, newPriority: PriorityType) => void,
   setIsMenuShown: React.Dispatch<React.SetStateAction<boolean>>
 }

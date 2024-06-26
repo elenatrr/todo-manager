@@ -10,7 +10,7 @@ You can see a live demo of the application [here](https://todo-manager-gilt.verc
 
 - Add, edit, and delete tasks
 - Mark tasks as completed
-- Filter tasks by status (all, active, completed)
+- Filter tasks by status and priority
 - Responsive design for mobile and desktop
 
 ## Installation

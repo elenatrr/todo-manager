@@ -42,7 +42,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
     })
   }
 
-  const editTodo = (event: React.ChangeEvent<HTMLInputElement>, section: string, task: TodoItemType) => {
+  const editTodo = (event: React.ChangeEvent<HTMLTextAreaElement>, section: string, task: TodoItemType) => {
     updateTasks(section, task.id, (todo: TodoItemType) => ({
       ...todo, text: event.target.value
     }))

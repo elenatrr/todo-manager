@@ -3,21 +3,18 @@
     {
       "id": 1,
       "text": "☕️ Brew the perfect cup of coffee (or three).",
-      "status": "not started",
       "completed": false,
       "priority": "high"
     },
     {
       "id": 2,
       "text": "Write code that's 90% genius, 10% 'what was I thinking?' 🙂",
-      "status": "in progress",
       "completed": false,
       "priority": "medium"
     },
     {
       "id": 3,
       "text": "Make a to-do list 📓 for tomorrow that includes “Make another to-do list.”",
-      "status": "done",
       "completed": true,
       "priority": "low"
     }
