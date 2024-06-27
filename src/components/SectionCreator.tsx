@@ -44,7 +44,7 @@ export default function SectionCreator({ todos, setTodos }: SectionCreatorProps)
         viewBox="0 0 24 24"
         strokeWidth={1.5}
         stroke="currentColor"
-        className="size-6"
+        className="size-6 ml-1"
       >
         <path
           strokeLinecap="round"
@@ -53,8 +53,8 @@ export default function SectionCreator({ todos, setTodos }: SectionCreatorProps)
         />
       </svg>
       <input
-        name="newTodo"
-        maxLength={100}
+        name="newSection"
+        maxLength={50}
         value={newSection}
         type="text"
         placeholder="Untitled"
