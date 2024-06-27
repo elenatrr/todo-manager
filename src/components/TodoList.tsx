@@ -1,5 +1,6 @@
 import { PriorityType, TodoItemType, TodoListType } from "../types/common";
 import { TodoListProps } from "../types/common";
+import SectionCreator from "./SectionCreator";
 import TodoCreator from "./TodoCreator";
 import TodoItem from "./TodoItem";
 
@@ -65,7 +66,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
       {Object.entries(todos).map(([section, tasks]) => (
         <section
           key={section}
-          className="bg-secondary p-5 rounded-lg border-2 border-text"
+          className="section mb-6"
         >
           <div className="flex gap-2">
             <svg
@@ -90,6 +91,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
           <TodoCreator todos={todos} setTodos={setTodos} sectionName={section} />
         </section>
       ))}
+      <SectionCreator todos={todos} setTodos={setTodos}/>
     </div>
   );
 }

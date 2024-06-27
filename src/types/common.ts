@@ -46,6 +46,11 @@ export type TodoCreatorProps = {
   sectionName: string
 }
 
+export type SectionCreatorProps = {
+  setTodos: SetTodosType;
+  todos: TodoListType;
+}
+
 export type DropdownMenuProps = {
   menuBtnRef:  React.RefObject<HTMLButtonElement>,
   sectionName: string,
