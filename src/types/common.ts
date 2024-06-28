@@ -2,59 +2,79 @@ import { ReactNode } from "react";
 
 export type PriorityType = "high" | "medium" | "low" | "none";
 
+export type ThemeType = "light" | "dark";
+
 export type TodoItemType = {
   id: number;
   text: string;
   completed: boolean;
   priority: PriorityType;
-}
-
-export type TodoListType = {
-  [section: string]: TodoItemType[]
-}
-
-export type SetTodosType = React.Dispatch<React.SetStateAction<TodoListType | null>>;
-
-export type TodoListProps = {
-  todos: TodoListType | null;
-  setTodos: SetTodosType;
 };
 
+export type SectionType = {
+  id: number;
+  sectionTitle: string;
+  todoList: TodoItemType[];
+};
+
+export type TodoAppDataType = SectionType[];
+
+export type SetTodoAppDataType = React.Dispatch<
+  React.SetStateAction<TodoAppDataType | null>
+>;
+
+export type TodoListProps = {
+  todoAppData: TodoAppDataType | null;
+  setTodoAppData: SetTodoAppDataType;
+};
 
 export type ThemeProviderProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 export type ThemeContextType = {
-  theme: "light" | "dark";
+  theme: ThemeType;
   toggleTheme: () => void;
-}
+};
 
 export type TodoItemProps = {
-  task: TodoItemType,
-  section: string,
-  onComplete: (section: string, task: TodoItemType) => void,
-  onEdit: (event: React.ChangeEvent<HTMLTextAreaElement>, section: string, task: TodoItemType) => void,
-  onPriorityChange: (section: string, task: TodoItemType, newPriority: PriorityType) => void,
-  onTextInputBlur: (section: string, task: TodoItemType) => void,
-  onDelete: (section: string, task: TodoItemType) => void
-}
+  todoItem: TodoItemType;
+  sectionId: number;
+  onComplete: (currentSectionId: number, currentTodo: TodoItemType) => void;
+  onEdit: (
+    event: React.ChangeEvent<HTMLTextAreaElement>,
+    currentSectionId: number,
+    currentTodo: TodoItemType
+  ) => void;
+  onPriorityChange: (
+    currentSectionId: number,
+    currentTodo: TodoItemType,
+    newPriority: PriorityType
+  ) => void;
+  onTextInputBlur: (
+    currentSectionId: number,
+    currentTodo: TodoItemType
+  ) => void;
+  onDelete: (currentSectionId: number, currentTodo: TodoItemType) => void;
+};
 
 export type TodoCreatorProps = {
-  todos: TodoListType;
-  setTodos: SetTodosType;
-  sectionName: string
-}
+  setTodoAppData: SetTodoAppDataType;
+  sectionId: number;
+};
 
 export type SectionCreatorProps = {
-  setTodos: SetTodosType;
-  todos: TodoListType;
-}
+  setTodoAppData: SetTodoAppDataType;
+};
 
 export type DropdownMenuProps = {
-  menuBtnRef:  React.RefObject<HTMLButtonElement>,
-  sectionName: string,
-  task: TodoItemType,
-  onPriorityChange: (section: string, task: TodoItemType, newPriority: PriorityType) => void,
-  setIsMenuShown: React.Dispatch<React.SetStateAction<boolean>>
-}
+  menuBtnRef: React.RefObject<HTMLButtonElement>;
+  sectionId: number;
+  todoItem: TodoItemType;
+  onPriorityChange: (
+    currentSectionId: number,
+    currentTodo: TodoItemType,
+    newPriority: PriorityType
+  ) => void;
+  setIsMenuShown: React.Dispatch<React.SetStateAction<boolean>>;
+};
