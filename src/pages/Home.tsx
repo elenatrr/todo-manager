@@ -1,28 +1,28 @@
 import { useEffect, useState } from "react";
 import TodoList from "../components/TodoList";
-import { TodoListType } from "../types/common";
+import { TodoAppDataType } from "../types/common";
 
 export default function Home() {
-  const [todos, setTodos] = useState<TodoListType | null>(null)
+  const [todoAppData, setTodoAppData] = useState<TodoAppDataType | null>(null)
 
   useEffect(() => {
-    const savedTodos = localStorage.getItem("todos")
+    const savedTodos = localStorage.getItem("todoAppData")
 
     if (savedTodos) {
-      setTodos(JSON.parse(savedTodos))
+      setTodoAppData(JSON.parse(savedTodos))
     } else {
       fetch("/initialTodos.json")
         .then((response) => response.json())
-        .then((data: TodoListType) => setTodos(data))
+        .then((data: TodoAppDataType) => setTodoAppData(data))
         .catch((err) => console.log("Error fetching todos:", err))
     }
   }, [])
 
   useEffect(() => {
-    if (todos !== null) {
-      localStorage.setItem("todos", JSON.stringify(todos))
+    if (todoAppData !== null) {
+      localStorage.setItem("todoAppData", JSON.stringify(todoAppData))
     }
-  }, [todos])
+  }, [todoAppData])
 
   return (
     <>
@@ -35,7 +35,7 @@ export default function Home() {
           <li className="dot before:bg-accent">none</li>
         </ul>
       </div>
-      <TodoList todos={todos} setTodos={setTodos} />
+      <TodoList todoAppData={todoAppData} setTodoAppData={setTodoAppData} />
     </>
   )
 }

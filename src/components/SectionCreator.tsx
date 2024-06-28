@@ -1,26 +1,29 @@
 import { useState } from "react"
 import { SectionCreatorProps } from "../types/common"
 
-export default function SectionCreator({ todos, setTodos }: SectionCreatorProps) {
+export default function SectionCreator({ setTodoAppData }: SectionCreatorProps) {
   const [newSection, setNewSection] = useState("")
-  const [isErrorShown, setIsErrorShown] = useState(false)
   const [isWrongFormat, setIsWrongFormat] = useState(false)
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewSection(event.target.value)
-    setIsErrorShown(false);
   }
 
   const createNewSection = () => {
     const newSectionName = newSection.trim().toLowerCase()
-    const isTitleDuplicate = Object.keys(todos).includes(newSectionName)
-    if (newSection.trim() && !isTitleDuplicate) {
-      setTodos((currentTodos) => {
-        return { ...currentTodos, [newSectionName]: [] };
+    if (newSection.trim()) {
+      setTodoAppData((currentData) => {
+        if (!currentData) {
+          return null;
+        }
+
+        return [...currentData, {
+          id: new Date().getTime(),
+          sectionTitle: newSectionName,
+          todoList: []
+        }];
       });
       setNewSection("");
-    } else if (isTitleDuplicate) {
-      setIsErrorShown(true)
     } else {
       setIsWrongFormat(true);
       setNewSection("");
@@ -59,7 +62,7 @@ export default function SectionCreator({ todos, setTodos }: SectionCreatorProps)
         type="text"
         placeholder="Untitled"
         autoComplete="off"
-        className={`${(isErrorShown || isWrongFormat) && "animate-shake"} bg-inherit flex-1 focus:outline-none text-ellipsis text-lg`}
+        className={`${isWrongFormat && "animate-shake"} bg-inherit flex-1 focus:outline-none text-ellipsis text-lg`}
         onKeyDown={handleKeyDown}
         onChange={handleInputChange}
       />
@@ -68,7 +71,6 @@ export default function SectionCreator({ todos, setTodos }: SectionCreatorProps)
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
         </svg>
       </button>}
-      {isErrorShown && <p className="text-error w-full text-sm ml-8">This section already exists</p>}
     </section>
   )
 }

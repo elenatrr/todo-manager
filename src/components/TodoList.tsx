@@ -1,106 +1,125 @@
 import { useState } from "react";
-import { PriorityType, TodoItemType } from "../types/common";
+import { PriorityType, SectionType, TodoItemType } from "../types/common";
 import { TodoListProps } from "../types/common";
 import SectionCreator from "./SectionCreator";
 import TodoCreator from "./TodoCreator";
 import TodoItem from "./TodoItem";
 
-export default function TodoList({ todos, setTodos }: TodoListProps) {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [newTitle, setNewTitle] = useState("");
+export default function TodoList({ todoAppData, setTodoAppData }: TodoListProps) {
+  const [activeSectionId, setActiveSectionId] = useState<number | null>(null);
+  const [editedSectionTitle, setEditedSectionTitle] = useState("");
 
-  if (!todos) {
+  if (!todoAppData) {
     return <div>Loading todos...</div>;
   }
 
-  const updateTasks = (section: string, taskId: number, updateFn: (todo: TodoItemType) => TodoItemType) => {
-    setTodos((currentTodos) => {
-      if (!currentTodos) {
+  const updateTodos = (currentSectionId: number, currentTodoId: number, updateFn: (todo: TodoItemType) => TodoItemType) => {
+    setTodoAppData((currentData) => {
+      if (!currentData) {
         return null;
       }
-      const updatedTasks = currentTodos[section].map((todo) =>
-        todo.id === taskId ? updateFn(todo) : todo
-      );
-      return { ...currentTodos, [section]: updatedTasks };
+
+      const updatedSections = currentData.map((section) => {
+        if (section.id === currentSectionId) {
+          const updatedTodos = section.todoList.map((todoItem) =>
+            todoItem.id === currentTodoId ? updateFn(todoItem) : todoItem
+          );
+          return { ...section, todoList: updatedTodos };
+        } else {
+          return section;
+        }
+      });
+      return updatedSections;
     });
   };
 
-  const handleComplete = (section: string, task: TodoItemType) => {
-    updateTasks(section, task.id, (todo) => ({
-      ...todo,
-      completed: !todo.completed,
+  const handleComplete = (currentSectionId: number, currentTodo: TodoItemType) => {
+    updateTodos(currentSectionId, currentTodo.id, (todoItem) => ({
+      ...todoItem,
+      completed: !todoItem.completed,
     }));
   };
 
-  const deleteTodo = (section: string, task: TodoItemType) => {
-    setTodos((currentTodos) => {
-      if (!currentTodos) {
+  const deleteTodoItem = (currentSectionId: number, currentTodo: TodoItemType) => {
+    setTodoAppData((currentData) => {
+      if (!currentData) {
         return null;
       }
-      const updatedTasks = currentTodos[section].filter((todo) => todo.id !== task.id);
-      return { ...currentTodos, [section]: updatedTasks };
+      const updatedSections = currentData.map((section) => {
+        if (section.id === currentSectionId) {
+          const updatedTodos = section.todoList.filter((todoItem) => todoItem.id !== currentTodo.id);
+          return { ...section, todoList: updatedTodos };
+        } else {
+          return section;
+        }
+      });
+      return updatedSections;
     });
   };
 
-  const editTodo = (event: React.ChangeEvent<HTMLTextAreaElement>, section: string, task: TodoItemType) => {
-    updateTasks(section, task.id, (todo) => ({
-      ...todo,
+  const editTodoItem = (event: React.ChangeEvent<HTMLTextAreaElement>, currentSectionId: number, currentTodo: TodoItemType) => {
+    updateTodos(currentSectionId, currentTodo.id, (todoItem) => ({
+      ...todoItem,
       text: event.target.value,
     }));
   };
 
-  const handleTextInputBlur = (section: string, task: TodoItemType) => {
-    if (!task.text.trim()) {
-      deleteTodo(section, task);
+  const handleTextInputBlur = (currentSectionId: number, currentTodo: TodoItemType) => {
+    const isTodoEmpty = !currentTodo.text.trim()
+
+    if (isTodoEmpty) {
+      deleteTodoItem(currentSectionId, currentTodo);
     }
   };
 
-  const handlePriorityChange = (section: string, task: TodoItemType, newPriority: PriorityType) => {
-    updateTasks(section, task.id, (todo) => ({
-      ...todo,
+  const handlePriorityChange = (currentSectionId: number, currentTodo: TodoItemType, newPriority: PriorityType) => {
+    updateTodos(currentSectionId, currentTodo.id, (todoItem) => ({
+      ...todoItem,
       priority: newPriority,
     }));
   };
 
-  const deleteSection = (section: string) => {
-    setTodos((currentTodos) => {
-      if (!currentTodos) {
+  const deleteSection = (currentSectionId: number) => {
+    setTodoAppData((currentData) => {
+      if (!currentData) {
         return null;
       }
-       // eslint-disable-next-line
-      const { [section]: _, ...rest } = currentTodos;
-      return rest;
+      const updatedSections = currentData.filter((section) => section.id !== currentSectionId);
+      return updatedSections;
     });
   };
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTitle(event.target.value);
+  const handleSectionTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedSectionTitle(event.target.value);
   };
 
-  const submitNewTitle = (section: string) => {
-    if (!newTitle.trim()) return;
-    setActiveSection(null);
-    setTodos((currentTodos) => {
-      if (!currentTodos) {
-        return null;
-      }
-      const sectionTodos = currentTodos[section];
-       // eslint-disable-next-line
-      const { [section]: _, ...rest } = currentTodos;
-      return { ...rest, [newTitle]: sectionTodos };
-    });
+  const submitEditedSectionTitle = (currentSectionId: number) => {
+    if (editedSectionTitle.trim()) {
+      setActiveSectionId(null);
+      setTodoAppData((currentData) => {
+        if (!currentData) {
+          return null;
+        }
+
+        const updatedSections = currentData.map((section) =>
+          section.id === currentSectionId ? { ...section, sectionTitle: editedSectionTitle } : section
+        );
+
+        return updatedSections;
+      });
+    }
   };
 
-  const editTitle = (section: string) => {
-    setActiveSection(section);
-    setNewTitle(section);
+  const editTitle = (currentSection: SectionType) => {
+    setActiveSectionId(currentSection.id);
+    setEditedSectionTitle(currentSection.sectionTitle);
   };
 
   return (
     <div>
-      {Object.entries(todos).map(([section, tasks]) => (
-        <section key={section} className="section mb-6">
-          <div className={`${activeSection === section ? "bg-background rounded" : ""} flex gap-2 mb-4 px-1`}>
+      {todoAppData.map((section) => (
+        <section key={section.id} className="section mb-6">
+          <div className={`${activeSectionId === section.id ? "bg-background rounded" : ""} flex gap-2 mb-4 px-1`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -115,22 +134,23 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
                 d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776"
               />
             </svg>
-            {activeSection === section ? (
+            {activeSectionId === section.id ? (
               <div className="flex flex-1 items-start">
                 <input
                   name="sectionTitle"
                   type="text"
                   maxLength={50}
-                  value={newTitle}
-                  placeholder={section}
+                  value={editedSectionTitle}
+                  placeholder={section.sectionTitle}
                   className="flex-1 capitalize text-lg outline-none bg-inherit"
                   autoFocus
-                  onChange={handleTitleChange}
+                  onChange={handleSectionTitleChange}
                 />
                 <button
                   aria-label="Submit New Title"
                   className="hover:text-green-600"
-                  onClick={() => submitNewTitle(section)}
+                  onClick={() => submitEditedSectionTitle(section.id)}
+                  onKeyDown={() => submitEditedSectionTitle(section.id)}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +170,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
               </div>
             ) : (
               <div className="flex-1 flex items-start">
-                <h2 className="capitalize text-lg flex-1">{section}</h2>
+                <h2 className="capitalize text-lg flex-1">{section.sectionTitle}</h2>
                 <button aria-label="Edit Title" onClick={() => editTitle(section)} className="hover:text-accent">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +191,7 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
             )}
             <button
               aria-label="Delete Section"
-              onClick={() => deleteSection(section)}
+              onClick={() => deleteSection(section.id)}
               className="hover:text-error self-start"
             >
               <svg
@@ -191,23 +211,23 @@ export default function TodoList({ todos, setTodos }: TodoListProps) {
             </button>
           </div>
           <ul>
-            {tasks.map((task) => (
+            {section.todoList.map((todoItem) => (
               <TodoItem
-                key={task.id}
-                task={task}
-                section={section}
+                key={todoItem.id}
+                todoItem={todoItem}
+                sectionId={section.id}
                 onComplete={handleComplete}
-                onEdit={editTodo}
+                onEdit={editTodoItem}
                 onPriorityChange={handlePriorityChange}
                 onTextInputBlur={handleTextInputBlur}
-                onDelete={deleteTodo}
+                onDelete={deleteTodoItem}
               />
             ))}
           </ul>
-          <TodoCreator todos={todos} setTodos={setTodos} sectionName={section} />
+          <TodoCreator setTodoAppData={setTodoAppData} sectionId={section.id} />
         </section>
       ))}
-      <SectionCreator todos={todos} setTodos={setTodos} />
+      <SectionCreator setTodoAppData={setTodoAppData} />
     </div>
   );
 }

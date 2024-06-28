@@ -3,10 +3,10 @@ import { TodoItemProps } from "../types/common"
 import DropdownMenu from "./DropdownMenu"
 import useAutosizeTextArea from "../hooks/useAutosizeTextArea"
 
-export default function TodoItem({ task, section, onComplete, onEdit, onPriorityChange, onTextInputBlur, onDelete }: TodoItemProps) {
+export default function TodoItem({ todoItem, sectionId, onComplete, onEdit, onPriorityChange, onTextInputBlur, onDelete }: TodoItemProps) {
   const [isMenuShown, setIsMenuShown] = useState(false)
   const menuBtnRef = useRef<HTMLButtonElement>(null)
-  const textAreaRef = useAutosizeTextArea(task.text)
+  const textAreaRef = useAutosizeTextArea(todoItem.text)
 
   const handleMenuToggle = () => {
     setIsMenuShown(!isMenuShown)
@@ -14,23 +14,23 @@ export default function TodoItem({ task, section, onComplete, onEdit, onPriority
 
   return (
     <li
-      key={task.id}
+      key={todoItem.id}
       className="relative flex gap-2 items-start mb-3 justify-between hover:bg-background px-1"
     >
       <input
         name="todoCheckbox"
         type="checkbox"
-        onChange={() => onComplete(section, task)}
-        checked={task.completed}
-        className={`${task.priority} mt-0.5 appearance-none flex-shrink-0 cursor-pointer h-5 w-5 border-2 rounded-md focus:outline-none checkbox`}
+        onChange={() => onComplete(sectionId, todoItem)}
+        checked={todoItem.completed}
+        className={`${todoItem.priority} mt-0.5 appearance-none flex-shrink-0 cursor-pointer h-5 w-5 border-2 rounded-md focus:outline-none checkbox`}
       />
       <textarea
         ref={textAreaRef}
-        value={task.text}
+        value={todoItem.text}
         maxLength={100}
         name="todoText"
-        onChange={(event) => onEdit(event, section, task)}
-        onBlur={() => onTextInputBlur(section, task)}
+        onChange={(event) => onEdit(event, sectionId, todoItem)}
+        onBlur={() => onTextInputBlur(sectionId, todoItem)}
         className="flex-1 bg-inherit outline-none resize-none overflow-hidden"
         rows={1}
       />
@@ -42,7 +42,7 @@ export default function TodoItem({ task, section, onComplete, onEdit, onPriority
       <button
         aria-label="Delete Todo"
         className="text-accent hover:text-error"
-        onClick={() => onDelete(section, task)}
+        onClick={() => onDelete(sectionId, todoItem)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +59,7 @@ export default function TodoItem({ task, section, onComplete, onEdit, onPriority
           />
         </svg>
       </button>
-      {isMenuShown && <DropdownMenu menuBtnRef={menuBtnRef} sectionName={section} task={task} onPriorityChange={onPriorityChange} setIsMenuShown={setIsMenuShown} />}
+      {isMenuShown && <DropdownMenu menuBtnRef={menuBtnRef} sectionId={sectionId} todoItem={todoItem} onPriorityChange={onPriorityChange} setIsMenuShown={setIsMenuShown} />}
     </li>
   )
 }

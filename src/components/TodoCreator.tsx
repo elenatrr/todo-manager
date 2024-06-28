@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { TodoCreatorProps, TodoItemType } from "../types/common";
 
-export default function TodoCreator({ todos, setTodos, sectionName }: TodoCreatorProps) {
+export default function TodoCreator({ setTodoAppData, sectionId }: TodoCreatorProps) {
   const [isFieldActive, setIsFieldActive] = useState(false);
   const [showTodoError, setShowTodoError] = useState(false);
   const [newTodo, setNewTodo] = useState<TodoItemType>({
@@ -27,12 +27,18 @@ export default function TodoCreator({ todos, setTodos, sectionName }: TodoCreato
   }
 
   const createNewTodo = useCallback(() => {
-    const sectionTodos = todos[sectionName as keyof TodoItemType];
 
     if (newTodo.text.trim()) {
-      setTodos((currentTodos) => {
-        return { ...currentTodos, [sectionName]: [...sectionTodos, newTodo] };
+      setTodoAppData((currentData) => {
+        if (!currentData) {
+          return null
+        }
+        const updatedSections = currentData.map((section) => {
+          return section.id === sectionId ? { ...section, todoList: [...section.todoList, newTodo] } : section
+        })
+        return updatedSections;
       });
+
       setNewTodo({
         id: new Date().getTime(),
         text: "",
@@ -47,11 +53,12 @@ export default function TodoCreator({ todos, setTodos, sectionName }: TodoCreato
         completed: false,
         priority: "none",
       });
+
       setTimeout(() => {
         setShowTodoError(false);
       }, 1000);
     }
-  }, [newTodo, sectionName, setTodos, todos])
+  }, [newTodo, sectionId, setTodoAppData])
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
