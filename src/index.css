@@ -3,27 +3,27 @@
 @tailwind utilities;
 
 :root {
-  --link-color: #836FFF;
+  --link-color: #c980c4;
   --primary-color: #fefffc;
   --secondary-color: #f6f1ea;
   --accent-color: #9fa5b0;
   --text-color: #363b4e;
   --background-color: #F0EBE3;
-  --high-color: #df6894;
+  --high-color: #c980c4;
   --medium-color: #e0a093;
   --low-color: #85bfaa;
 }
 
 .dark {
-  --link-color: #DCFFB7;
+  --link-color: #a6acec;
   --primary-color: #454a5a;
   --secondary-color: #313544;
   --accent-color:#cbced6;
   --text-color: #F0EBE3;
   --background-color: #363b4e;
-  --high-color: #fc49b1;
-  --medium-color: #f2da85;
-  --low-color: #acefdd;
+  --high-color: #a56cc1;
+  --medium-color: #a6acec;
+  --low-color: #ace7ef;
 }
 
 .btn {
