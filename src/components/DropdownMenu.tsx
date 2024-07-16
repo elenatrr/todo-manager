@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import { DropdownMenuProps, PriorityType } from "../types/common"
 
 export default function DropdownMenu({ menuBtnRef, sectionId, todoItem, onPriorityChange, setIsMenuShown }: DropdownMenuProps) {
-  const priorities: PriorityType[] = ["high", "medium", "low", "none"]
+  const priorities: PriorityType[] = ["high", "medium", "low"]
   const dropDownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {

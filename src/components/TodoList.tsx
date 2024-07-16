@@ -171,7 +171,7 @@ export default function TodoList({ todoAppData, setTodoAppData }: TodoListProps)
             ) : (
               <div className="flex-1 flex items-start">
                 <h2 className="capitalize text-lg flex-1">{section.sectionTitle}</h2>
-                <button aria-label="Edit Title" onClick={() => editTitle(section)} className="hover:text-accent">
+                <button aria-label="Edit Title" onClick={() => editTitle(section)} className="text-accent hover:text-text">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -192,7 +192,7 @@ export default function TodoList({ todoAppData, setTodoAppData }: TodoListProps)
             <button
               aria-label="Delete Section"
               onClick={() => deleteSection(section.id)}
-              className="hover:text-error self-start"
+              className="text-accent hover:text-error self-start"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
