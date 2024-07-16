@@ -6,8 +6,6 @@ export type ThemeType = "light" | "dark";
 
 export type FontFamilyType = "sans" | "mono" | "serif";
 
-export type FontSizeType = "small" | "medium" | "large";
-
 export type TodoItemType = {
   id: number;
   text: string;
@@ -41,14 +39,9 @@ export type ThemeContextType = {
   toggleTheme: () => void;
 };
 
-export type FontType = {
-  family: FontFamilyType;
-  size: FontSizeType;
-};
-
 export type FontContextType = {
-  font: FontType;
-  switchFont: (family?: FontFamilyType, size?: FontSizeType) => void;
+  fontFamily: FontFamilyType;
+  switchFont: (fontFamily: FontFamilyType) => void;
 };
 
 export type TodoItemProps = {

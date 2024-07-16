@@ -1,23 +1,23 @@
 import { createContext, useEffect, useState } from "react";
-import { ContextProviderProps, FontContextType, FontFamilyType, FontSizeType, FontType } from "../types/common";
+import { ContextProviderProps, FontContextType, FontFamilyType } from "../types/common";
 
-export const FontContext = createContext<FontContextType>({ font: { family: "sans", size: "medium" }, switchFont: () => { } })
+export const FontContext = createContext<FontContextType>({ fontFamily: "sans", switchFont: () => { } })
 
 export const FontProvider = ({ children }: ContextProviderProps) => {
-  const [font, setFont] = useState<FontType>(() => {
-    return localStorage.font ? JSON.parse(localStorage.font) : { family: "sans", size: "medium" }
+  const [fontFamily, setFontFamily] = useState<FontFamilyType>(() => {
+    return localStorage.fontFamily ? JSON.parse(localStorage.fontFamily) : "sans"
   })
 
-  const switchFont = (family?: FontFamilyType, size?: FontSizeType) => {
-    setFont((currentFont) => ({ family: family || currentFont.family, size: size || currentFont.size }))
+  const switchFont = (fontFamily: FontFamilyType) => {
+    setFontFamily((fontFamily))
   }
 
   useEffect(() => {
-    localStorage.setItem("font", JSON.stringify(font))
-  }, [font])
+    localStorage.setItem("fontFamily", JSON.stringify(fontFamily))
+  }, [fontFamily])
 
   return (
-    <FontContext.Provider value={{ font, switchFont }}>
+    <FontContext.Provider value={{ fontFamily, switchFont }}>
       {children}
     </FontContext.Provider>
   )
