@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { ThemeProviderProps, ThemeContextType } from "../types/common";
+import { ContextProviderProps, ThemeContextType, ThemeType } from "../types/common";
 
 export const ThemeContext = createContext<ThemeContextType>({ theme: "light", toggleTheme: () => { } })
 
@@ -13,8 +13,8 @@ if (
   document.documentElement.classList.remove("dark");
 }
 
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
+export const ThemeProvider = ({ children }: ContextProviderProps) => {
+  const [theme, setTheme] = useState<ThemeType>(() => {
     return localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dark" : "light"
   })
 
