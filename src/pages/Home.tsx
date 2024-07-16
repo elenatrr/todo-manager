@@ -32,7 +32,6 @@ export default function Home() {
           <li className="dot before:bg-high">high</li>
           <li className="dot before:bg-medium">medium</li>
           <li className="dot before:bg-low">low</li>
-          <li className="dot before:bg-accent">none</li>
         </ul>
       </div>
       <TodoList todoAppData={todoAppData} setTodoAppData={setTodoAppData} />

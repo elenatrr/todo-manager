@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --link-color: #c980c4;
   --primary-color: #fefffc;
   --secondary-color: #f6f1ea;
   --accent-color: #9fa5b0;
@@ -14,6 +15,7 @@
 }
 
 .dark {
+  --link-color: #a6acec;
   --primary-color: #454a5a;
   --secondary-color: #313544;
   --accent-color:#cbced6;
@@ -25,7 +27,7 @@
 }
 
 .btn {
-  @apply hover:text-accent transition-colors;
+  @apply hover:text-link transition-colors;
 }
 
 .title {
@@ -42,10 +44,6 @@
 
 .low {
   @apply border-low checked:bg-low;
-}
-
-.none {
-  @apply border-accent checked:bg-accent;
 }
 
 .checkbox {

@@ -1,8 +1,10 @@
 import { ReactNode } from "react";
 
-export type PriorityType = "high" | "medium" | "low" | "none";
+export type PriorityType = "high" | "medium" | "low";
 
 export type ThemeType = "light" | "dark";
+
+export type FontFamilyType = "sans" | "mono" | "serif";
 
 export type TodoItemType = {
   id: number;
@@ -28,13 +30,18 @@ export type TodoListProps = {
   setTodoAppData: SetTodoAppDataType;
 };
 
-export type ThemeProviderProps = {
+export type ContextProviderProps = {
   children: ReactNode;
 };
 
 export type ThemeContextType = {
   theme: ThemeType;
   toggleTheme: () => void;
+};
+
+export type FontContextType = {
+  fontFamily: FontFamilyType;
+  switchFont: (fontFamily: FontFamilyType) => void;
 };
 
 export type TodoItemProps = {

@@ -8,7 +8,7 @@ export default function TodoCreator({ setTodoAppData, sectionId }: TodoCreatorPr
     id: new Date().getTime(),
     text: "",
     completed: false,
-    priority: "none",
+    priority: "low",
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -43,7 +43,7 @@ export default function TodoCreator({ setTodoAppData, sectionId }: TodoCreatorPr
         id: new Date().getTime(),
         text: "",
         completed: false,
-        priority: "none",
+        priority: "low",
       });
     } else {
       setShowTodoError(true);
@@ -51,7 +51,7 @@ export default function TodoCreator({ setTodoAppData, sectionId }: TodoCreatorPr
         id: new Date().getTime(),
         text: "",
         completed: false,
-        priority: "none",
+        priority: "low",
       });
 
       setTimeout(() => {
